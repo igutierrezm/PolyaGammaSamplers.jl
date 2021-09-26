@@ -17,12 +17,11 @@ has Laplace transform
 ```
 
 Although somewhat contrived, this distribution is extremely useful for learning 
-Bayesian Logit models ([1]), Bayesian Negative Binomial models ([2]), and their 
-generalizations (see, e.g. [3]).
+Bayesian Logit models (\[1\]), Bayesian Negative Binomial models (\[2\]), and 
+their generalizations (see, e.g. \[3\]).
 
-Currently, the only available sampler is the one proposed in [1] (hereafter,
-the PSW sampler), but I hope to add the sampler proposed in [4] during the
-next months.
+Currently, the only available sampler is the one proposed in \[1\] (hereafter,
+the PSW sampler), but I hope to add the sampler proposed in \[4\] soon.
 
 ## References
 
