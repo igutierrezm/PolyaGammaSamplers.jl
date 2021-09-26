@@ -10,11 +10,11 @@ described in [1], using the
 [Distributions.jl](https://github.com/JuliaStats/Distributions.jl) 
 interface.
 
-The Polya-Gamma distribution with parameters `b` and `z` has Laplace transform
+The Polya-Gamma distribution with parameters _b_ and _z_ has Laplace transform
 
 ```math
 \begin{aligned}
-\mathcal{L}(t) = \cosh^b(z) \cosh^{-b}(\sqrt{2t + z^2})
+\mathcal{L}(t) = \cosh^b(z) \cosh^{-b}(\sqrt{2t + z^2}).
 \end{aligned}
 ```
 
