@@ -9,6 +9,4 @@
 provides a method for sampling from the *Polya-Gamma distribution*, as
 described in [1], using the 
 [Distributions.jl](https://github.com/JuliaStats/Distributions.jl) 
-interface.
-
-See the documentation for details.
+interface. See the documentation for details.
