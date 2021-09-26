@@ -4,8 +4,8 @@ using Distributions
 using Random
 using StatsFuns
 
-# export PolyaGammaPSWSampler
+export PolyaGammaPSWSampler
 
-# include("polyagammapswsampler.jl")
+include("polyagammapswsampler.jl")
 
 end
