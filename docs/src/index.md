@@ -5,12 +5,10 @@ CurrentModule = PolyaGammaSamplers
 # PolyaGammaSamplers.jl
 
 [PolyaGammaSamplers.jl](https://github.com/igutierrezm/PolyaGammaSamplers.jl) 
-provides a method for sampling from the *Polya-Gamma distribution*, as
-described in [1], using the 
-[Distributions.jl](https://github.com/JuliaStats/Distributions.jl) 
-interface.
-
-The Polya-Gamma distribution with parameters _b_ and _z_ has Laplace transform
+provides a method for sampling from the *Polya-Gamma distribution* ([1]), using 
+the [Distributions.jl](https://github.com/JuliaStats/Distributions.jl) 
+interface. The Polya-Gamma distribution with parameters _b_ and _z_ 
+has Laplace transform
 
 ```math
 \begin{aligned}
@@ -21,6 +19,10 @@ The Polya-Gamma distribution with parameters _b_ and _z_ has Laplace transform
 Although somewhat contrived, this distribution is extremely useful for learning 
 Bayesian Logit models ([1]), Bayesian Negative Binomial models ([2]), and their 
 generalizations (see, e.g. [3]).
+
+Currently, the only available sampler is the one proposed in [1] (hereafter,
+the PSW sampler), but I hope to add the sampler proposed in [4] during the
+next months.
 
 ## References
 
@@ -35,3 +37,6 @@ generalizations (see, e.g. [3]).
 3. Rigon, T., & Durante, D. (2021). Tractable Bayesian density regression 
     via logit stick-breaking priors. *Journal of Statistical Planning and 
     Inference*, 211, 131–142. <https://doi.org/10.1016/j.jspi.2020.05.009>.
+4. Windle, J., Polson, N. G., and Scott, J. G. (2014). Sampling Polya-Gamma 
+    random variates: Alternate and approximate techniques. arXiv e-prints, 
+    page arXiv:1405.0506.
