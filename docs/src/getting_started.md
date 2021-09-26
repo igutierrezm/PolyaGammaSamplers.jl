@@ -18,11 +18,6 @@ integer, we employ the PSW sampler ([1]).
 
 ```julia
 julia> s = PolyaGammaPSWSampler(2, 1.0);
-
-julia> x = rand(s, 2)
-5-element Vector{Float64}:
- 0.19409207900581654
- 0.21775655550527578
 ```
 
 Finally, we obtain samples using `rand`.
