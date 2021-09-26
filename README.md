@@ -11,15 +11,18 @@ described in [1], using the
 [Distributions.jl](https://github.com/JuliaStats/Distributions.jl) 
 interface. See the documentation for details.
 
-# Acknowledgment
+# Acknowledgments
 
 [PolyaGammaSamplers.jl](https://github.com/igutierrezm/PolyaGammaSamplers.jl) 
 is basically a Julia-1.0-compatible version of
 [PolyaGammaDistribution.jl](https://github.com/currymj/PolyaGammaDistribution.jl). 
-The only difference is that `PolyaGammaDistribution.jl` defines a distribution,
-whereas `PolyaGammaSamplers.jl` defines a sampler. This means that 
-`PolyaGammaSamplers.jl` concentrates on sampling (instead of 
-defining the pdf, cdf and the quantiles of the Polya-Gamma 
-distribution, for example). The user can learn more about the difference
-between samplers and distributions 
+The only difference is that 
+[PolyaGammaDistribution.jl](https://github.com/currymj/PolyaGammaDistribution.jl) 
+defines a distribution, whereas 
+[PolyaGammaSamplers.jl](https://github.com/igutierrezm/PolyaGammaSamplers.jl) 
+defines a sampler. This means that 
+[PolyaGammaSamplers.jl](https://github.com/igutierrezm/PolyaGammaSamplers.jl) 
+concentrates on sampling (instead of defining the pdf, cdf and the quantiles 
+of the Polya-Gamma distribution, for example). The user can learn more about 
+the difference between samplers and distributions 
 [here](https://juliastats.org/Distributions.jl/stable/types/).
