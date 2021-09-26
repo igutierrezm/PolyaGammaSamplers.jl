@@ -2,5 +2,5 @@ using PolyaGammaSamplers
 using Test
 
 @testset "PolyaGammaSamplers.jl" begin
-    include("polyagammapswsampler.jl")
+    # include("polyagammapswsampler.jl")
 end
