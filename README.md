@@ -20,4 +20,6 @@ The only difference is that `PolyaGammaDistribution.jl` defines a distribution,
 whereas `PolyaGammaSamplers.jl` defines a sampler. This means that 
 `PolyaGammaSamplers.jl` concentrates on sampling (instead of 
 defining the pdf, cdf and the quantiles of the Polya-Gamma 
-distribution, for example). 
+distribution, for example). The user can learn more about the difference
+between samplers and distributions 
+[here](https://juliastats.org/Distributions.jl/stable/types/).
