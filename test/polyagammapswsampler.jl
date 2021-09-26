@@ -25,7 +25,12 @@ end
 @testset begin
     tol = 5
     n = 10^6
+    
     s = PolyaGammaPSWSampler(1, 1.0)
+    @test abs(mean(s) - mean(rand(s, n))) < tol * √(var(s) / n)
+    @test abs(var(s) - var(rand(s, n))) < tol * √(2 * var(s)^2 / n)
+
+    s = PolyaGammaPSWSampler(1, 5.0)
     @test abs(mean(s) - mean(rand(s, n))) < tol * √(var(s) / n)
     @test abs(var(s) - var(rand(s, n))) < tol * √(2 * var(s)^2 / n)
 end
