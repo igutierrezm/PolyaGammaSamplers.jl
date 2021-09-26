@@ -21,9 +21,8 @@ defines a distribution, whereas
 [PolyaGammaSamplers.jl](https://github.com/igutierrezm/PolyaGammaSamplers.jl) 
 defines a sampler. This means that 
 [PolyaGammaSamplers.jl](https://github.com/igutierrezm/PolyaGammaSamplers.jl) 
-concentrates on sampling (instead of defining the pdf, cdf and the quantiles 
-of the Polya-Gamma distribution, for example). The user can learn more about 
-the difference between samplers and distributions 
+concentrates on sampling (instead of implementing the density for example). The 
+user can learn more about the difference between samplers and distributions 
 [here](https://juliastats.org/Distributions.jl/stable/types/).
 
 ## References
