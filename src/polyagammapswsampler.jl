@@ -1,14 +1,14 @@
 """
     PolyaGammaPSWSampler(b::Int, z::Real)
 
-PSW sampler from [1] for a Polya-Gamma distribution with parameters `b` and `z`,
-that is to say, a random variable with Laplace transform
+PSW sampler ([1]) for a Polya-Gamma distribution with parameters `b` and `z`,
+and Laplace transform
 
 ```math
 \\mathcal{L}(t) = \\cosh^b(z) \\cosh^{-b}(\\sqrt{2t + z^2})
 ```
 
-References:
+References
 
 * [1] <https://doi.org/10.1080/01621459.2013.829001>
 """
