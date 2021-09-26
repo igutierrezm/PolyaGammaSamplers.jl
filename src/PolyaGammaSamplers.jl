@@ -1,5 +1,11 @@
 module PolyaGammaSamplers
 
-# Write your package code here.
+using Distributions
+using Random
+using StatsFuns
+
+export PolyaGammaPSWSampler
+
+include("polyagammapswsampler.jl")
 
 end
