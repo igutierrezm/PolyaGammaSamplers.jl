@@ -1,8 +1,8 @@
 """
     PolyaGammaPSWSampler(b::Int, z::Real)
 
-PSW sampler ([1]) for a Polya-Gamma distribution with parameters `b` and `z`,
-and Laplace transform
+PSW sampler ([1]) for a Polya-Gamma distribution. A Polya Gamma with parameters 
+`b` > 0 and `z` ≥ 0 has Laplace transform
 
 ```math
 \\mathcal{L}(t) = \\cosh^b(z) \\cosh^{-b}(\\sqrt{2t + z^2})
@@ -16,6 +16,44 @@ struct PolyaGammaPSWSampler{T <: Real} <: Sampleable{Univariate, Continuous}
     b::Int
     z::T
 end
+
+# # Devroye's sampler for the J* distribution. The J* distribution with 
+# # parameter `b` has Laplace transform 𝓛(t) = cos^{-b}(√2t)
+# struct JStarDevroyeSampler{T <: Real} <: Sampleable{Univariate, Continuous}
+#     b::Int
+# end
+
+struct TruncatedIGSampler{T <: Real} <: Sampleable{Univariate, Continuous}
+    μ::T
+    u::T
+end
+
+function Base.rand(
+    rng::AbstractRNG, 
+    d::TruncatedIGSampler
+) where T <: Real
+    # μ, lb, ub = params(d)
+    # Algorithm 3 in the arxiv version of the article
+    x = Inf
+    # if μ < ub
+    #     while x > t
+    #         y = randn(rng)^2 
+    #         x = μ + 0.5 * μ^2 * y - 0.5 * μ * √(4 * μ * y + (μ * y)^2)
+    #         u = rand()
+    #         if u > μ / (μ + x)
+    #             x = μ^2 / x
+    #         end
+    #     end
+    # end
+    return x
+end
+
+# function Base.rand(rng::AbstractRNG, s::JStarDevroyeSampler)
+#     t = 0.64 # as in [1]
+#     z = abs(z) * 0.5
+#     yz = π^2 / 8 + z^2 / 2
+
+# end
 
 function Base.rand(rng::AbstractRNG, s::PolyaGammaPSWSampler)
     out = 0.0
@@ -65,21 +103,23 @@ end
 function rtigauss(rng::AbstractRNG, z::Real, t::Real)
     z = abs(z)
     μ = inv(z)
-    x = t + 1.0
-    if μ > t
-        α = 0.0
-        while rand(rng) > α
-            e1 = randexp(rng)
-            e2 = randexp(rng)
+    x = 2 * t # any number greater than t is ok
+    if μ > t # Literal implementation of [1, algorithm 2]
+        a = 0.0 # In [1]: α
+        while rand(rng) > a
+            e1 = randexp(rng) # In [1]: E 
+            e2 = randexp(rng) # In [1]: E' 
             while e1^2 > (2 * e2 / t)
                 e1 = randexp(rng)
                 e2 = randexp(rng)
             end
             x = t / (1 + t * e1)^2
-            α = exp(-0.5 * z^2 * x)
+            a = exp(- z^2 * x / 2)
         end
-    else
-        while x > t
+    else # literal implementation of [1, algorithm 3]
+        # there is a typo in the supplement. 
+        # The condition is `x > t`, not `x > R` (there is no such R)
+        while x > t 
             y = randn(rng)^2
             x = μ + μ^2 * y / 2 - μ * √(4 * μ * y + (μ * y)^2) / 2
             if rand(rng) > μ / (μ + x)
