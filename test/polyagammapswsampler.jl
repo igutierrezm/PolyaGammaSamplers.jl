@@ -11,16 +11,16 @@ using Statistics
     @test var(s2) ≈ 0.03444664538852302
 end
 
-@testset begin
-    t = 0.64
-    tol = 1e-3
-    rng = MersenneTwister(1)
-    @test abs(PolyaGammaSamplers.mass_texpon(0.0, t) - 0.5776972) < tol
-    @test abs(PolyaGammaSamplers.mass_texpon(1.0, t) - 0.4605903) < tol
-    @test abs(PolyaGammaSamplers.mass_texpon(2.0, t) - 0.2305365) < tol
-    x = [PolyaGammaSamplers.rtigauss(rng, 1.0, t) for _ in 1:10000]
-    @test abs(mean(x) - .372498) < .005
-end
+# @testset begin
+#     t = 0.64
+#     tol = 1e-3
+#     rng = MersenneTwister(1)
+#     @test abs(PolyaGammaSamplers.mass_texpon(0.0, t) - 0.5776972) < tol
+#     @test abs(PolyaGammaSamplers.mass_texpon(1.0, t) - 0.4605903) < tol
+#     @test abs(PolyaGammaSamplers.mass_texpon(2.0, t) - 0.2305365) < tol
+#     x = [PolyaGammaSamplers.rtigauss(rng, 1.0, t) for _ in 1:10000]
+#     @test abs(mean(x) - .372498) < .005
+# end
 
 @testset begin
     tol = 5
