@@ -116,10 +116,12 @@ function sp_n(x, z, n)
     u = t - z^2 / 2
     s = 2 * u
     if abs(u) > sqrt(eps(typeof(u)))
-        K_prime2_tsar = x^2 + (1 - x) / 2 / u;
+        K_prime2_star = x^2 + (1 - x) / s;
     else
-        K_prime2_tsar = x^2 - 1 / 3 - 2 * s / 15
+        K_prime2_star = x^2 - 1 / 3 - 2 * s / 15
     end
+    log_out = log(0.5 * n / pi) / 2 - log(K_prime2_star) / 2 + phi / n
+    exp(log_out)
 end
 
 # Compute f(t0) := K'(t0) - t0, given a value of z
