@@ -133,8 +133,3 @@ end
 function f_prime_fun(t0, z)
     K_prime2_fun(t0, z)
 end
-
-# Compute t(x) := \text{armgin}_s {K(s) - s x}
-function t_fun(x, z)
-
-end
