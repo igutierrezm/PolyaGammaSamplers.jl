@@ -55,3 +55,8 @@ function rel_tanh(x::Real)
     tol = typeof(x) |> eps |> sqrt
     abs(x) > tol ? tan(x) / x : 1.0 - x^2 / 3 + 2 * x^4 / 15
 end
+
+function spn_fun(x, z, ustar, n)
+    Kp2star = K_prime2_star_fun(x, ustar)
+    sqrt(n / 2 / pi) * exp(n * phi_fun(x, z, ustar)) / sqrt(Kp2star)
+end
