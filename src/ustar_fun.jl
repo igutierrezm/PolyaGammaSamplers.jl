@@ -74,7 +74,3 @@ function newtons_method(fg, x; x_tol = 1e-8, iterations = 100)
     end
     return x
 end
-
-# tstar_fun(0.5, 1.0) # tstar(0.5, 1.0) ≈ -1.33, entonces
-# tstar_fun(0.5, 1.0) - 1.0^2 / 2 # ustar(0.5) debería ser -1.83
-@time ustar_fun(0.5);
