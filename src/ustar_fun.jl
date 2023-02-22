@@ -15,8 +15,8 @@ function target_gh(u::Real, x::Real)
 end
 
 # In the notation of [1]:
-# Return the 1st derivative of K(t) (wrt u)
-# Note: The approximation around 0 comes from the BayesLogit (R) package
+# Return the 1st derivative of K(t) (wrt u).
+# Note: The approximation around 0 comes from the BayesLogit (R) package.
 function K_prime1_fun(u::Real)
     s = 2 * u
     a = sqrt(abs(s))
@@ -32,8 +32,8 @@ function K_prime1_fun(u::Real)
 end
 
 # In the notation of [1]:
-# Return the 2nd derivative of K(t) (wrt u)
-# Note: The Taylor expansion around 0 comes from the BayesLogit (R) package
+# Return the 2nd derivative of K(t) (wrt u).
+# Note: The Taylor expansion around 0 comes from the BayesLogit (R) package.
 function K_prime2_fun(u, K_prime1)
     s = 2 * u
     if abs(s) > sqrt(eps(typeof(s)))
@@ -45,9 +45,9 @@ function K_prime2_fun(u, K_prime1)
 end
 
 # In the notation of [1]:
-# Return a starting guess for u*(x) = t(x) - z^2 / 2
+# Return a starting guess for u*(x) = t(x) - z^2 / 2.
 # Note: The guesses were taken from the (Python) package polyagamma,
-# see https://github.com/zoj613/polyagamma/blob/main/src/pgm_saddle.c#L119
+# see https://github.com/zoj613/polyagamma/blob/main/src/pgm_saddle.c#L119.
 function init_ustar(x)
     x <= 0.25 ? -9.0 :
     x <= 0.5 ? -1.78 :
@@ -60,7 +60,7 @@ end
 
 # Find a root of f(x) using Newton's method, given an initial value x
 # and a function `fg()` such that fg(x) returns f(x) and g(x) := f'(x).
-# Note: This function was adapted from [2, p.91]
+# Note: This function was adapted from [2, p.91].
 function newtons_method(fg, x; x_tol = 1e-8, iterations = 100)
     dx = Inf
     iter = 1
