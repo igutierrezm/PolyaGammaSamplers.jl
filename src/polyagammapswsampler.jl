@@ -1,7 +1,7 @@
 """
     PolyaGammaPSWSampler(b::Int, z::Real)
 
-PSW sampler ([1]) for a Polya-Gamma distribution. A Polya Gamma with parameters 
+PSW sampler ([1]) for a Polya-Gamma distribution. A Polya Gamma with parameters
 `b` > 0 and `z` ≥ 0 has Laplace transform
 
 ```math
@@ -70,8 +70,8 @@ end
 #     if μ > t # Literal implementation of [1, algorithm 2]
 #         a = 0.0 # In [1]: α
 #         while rand(rng) > a
-#             e1 = randexp(rng) # In [1]: E 
-#             e2 = randexp(rng) # In [1]: E' 
+#             e1 = randexp(rng) # In [1]: E
+#             e2 = randexp(rng) # In [1]: E'
 #             while e1^2 > (2 * e2 / t)
 #                 e1 = randexp(rng)
 #                 e2 = randexp(rng)
@@ -80,9 +80,9 @@ end
 #             a = exp(- z^2 * x / 2)
 #         end
 #     else # literal implementation of [1, algorithm 3]
-#         # there is a typo in the supplement. 
+#         # there is a typo in the supplement.
 #         # The condition is `x > t`, not `x > R` (there is no such R)
-#         while x > t 
+#         while x > t
 #             y = randn(rng)^2
 #             x = μ + μ^2 * y / 2 - μ * √(4 * μ * y + (μ * y)^2) / 2
 #             if rand(rng) > μ / (μ + x)
@@ -111,7 +111,7 @@ end
 
 #==============================================================================#
 
-# PSW sampler for the J* distribution [1]. The J* distribution with 
+# PSW sampler for the J* distribution [1]. The J* distribution with
 # parameters 1 and `z` has Laplace transform 𝓛(t) = cos^{-z}(√2t)
 struct JStarPSWSampler{T <: Real} <: Sampleable{Univariate, Continuous}
     z::T
@@ -119,7 +119,7 @@ end
 
 # Simulate from a J*(1, z) distribution
 # Algorithm 1 in [1]'s supplementary material
-# Note: 
+# Note:
 # This is a literal transcription from the article's formula
 # except for the letter case
 function Base.rand(rng::AbstractRNG, s::JStarPSWSampler)
@@ -127,7 +127,7 @@ function Base.rand(rng::AbstractRNG, s::JStarPSWSampler)
     t = 0.64
     μ = 1 / z
     k = π^2 / 8 + z^2 / 2
-    p = (π / 2 / k) * exp(- k * t) 
+    p = (π / 2 / k) * exp(- k * t)
     q = 2 * exp( - z) * cdf(InverseGaussian(μ, 1.0), t)
     while true
         # Simulate a candidate x
@@ -160,7 +160,7 @@ end
 
 # Return ``a_n(x)`` for a given t, see [1], eqs. (12)-(13)
 # Equations (12)-(13) in [1]
-# Note: 
+# Note:
 # This is a literal transcription from the article's formula
 # except for the letter case
 function a_xnt(x::Real, n::Int, t::Real)
@@ -169,7 +169,7 @@ end
 
 # Return ``a_n(x)^L`` for a given t
 # Equation (12) in [1]
-# Note: 
+# Note:
 # This is a literal transcription from the article's formula
 # except for the letter case
 function a_xnt_left(x::Real, n::Int, t::Real)
@@ -178,51 +178,41 @@ end
 
 # Return ``a_n(x)^R`` for a given t, see [1], eq. (13)
 # Equation (13) in [1]
-# Note: 
+# Note:
 # This is a literal transcription from the article's formula
 # except for the letter case
 function a_xnt_right(x::Real, n::Int, t::Real)
     π * (n + 0.5) * exp(- (n + 0.5)^2 * π^2 * x / 2)
 end
 
-# Simulate from an IG(μ, 1) distribution
-# Algorithms 2-3 in [1]'s supplementary material
-# Note: 
-# This is a literal transcription from the article's pseudo code
-# except for the letter case
+# Return a draw from IG(μ, 1) 1_{(0, t]}, see [2, pp. 3-4]
 function randtigauss(rng::AbstractRNG, z::Real, t::Real)
     1 / z > t ? randtigauss_v1(rng, z, t) : randtigauss_v2(rng, z, t)
 end
 
-# Simulate from an IG(μ, 1) distribution, for μ := 1 / z > t;
-# Algorithms 2 in [1]'s supplementary material
-# Note:
-# This is a literal transcription from the article's pseudo code
-# except for the letter case and one little a detail: the 
-# original condition  `x > R` must be replaced by `x > t`
+# Return a draw from IG(μ, 1) 1_{(0, t]}, for 1 / z > t, see [2, alg. 2]
 function randtigauss_v1(rng::AbstractRNG, z::Real, t::Real)
     x = t + one(t)
     α = zero(t)
     while rand(rng) > α
-        e = randexp(rng) # In [1]: E 
+        e = randexp(rng) # In [1]: E
         é = randexp(rng) # In [1]: E'
         while e^2 > (2 * é / t)
             e = randexp(rng)
             é = randexp(rng)
         end
-        x = t / (1 + t * e)^2 
+        x = t / (1 + t * e)^2
         α = exp(- z^2 * x / 2)
     end
     return x
 end
 
-# Simulate from an IG(μ, 1) distribution, for μ := 1 / z ≤ t
-# Algorithms 3 in [1]'s supplementary material
-# Note: This is a literal transcription from the article's pseudo code
+# Return a draw from IG(μ, 1) 1_{(0, t]}, for 1 / z ≤ t, see [2, alg. 3]
+# Note: There is a typo in the document: `x > R` must be replaced by `x > t`.
 function randtigauss_v2(rng::AbstractRNG, z::Real, t::Real)
     x = t + one(t)
     μ = 1 / z
-    while x > t 
+    while x > t
         y = randn(rng)^2
         x = μ + μ^2 * y / 2 - μ * √(4 * μ * y + (μ * y)^2) / 2
         if rand(rng) > μ / (μ + x)
@@ -231,3 +221,10 @@ function randtigauss_v2(rng::AbstractRNG, z::Real, t::Real)
     end
     return x
 end
+
+#region References
+
+# [1] https://doi.org/10.1080/01621459.2013.829001.
+# [2] https://doi.org/10.1080/01621459.2013.829001 (supplementary material).
+
+#endregion
