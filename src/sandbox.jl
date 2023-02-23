@@ -60,3 +60,43 @@ function spn_fun(x, z, ustar, n)
     Kp2star = K_prime2_star_fun(x, ustar)
     sqrt(n / 2 / pi) * exp(n * phi_fun(x, z, ustar)) / sqrt(Kp2star)
 end
+
+function m_fun(z::Real)
+    tol = typeof(z) |> eps |> sqrt
+    abs(z) > tol ? tanh(z) / z : 1.0 - z^2 / 3 + 2 * z^4 / 15
+end
+
+function rand_pg_sp(rng::AbstractRNG, n::Real, z::Real)
+    # Construct the tangent lines
+    xl = m_fun(z)
+    xc = 2.75 * xl # taken from the (Python) package polyagamma, see [XX]
+    xr = 3.00 * xl # taken from the (Python) package polyagamma, see [XX]
+    ustarl = ustar_fun(xl)
+    ustarr = ustar_fun(xr)
+    interceptl, slopel =  tangent_to_eta(x, z, xl, ustarl)
+    interceptr, sloper =  tangent_to_eta(x, z, xr, ustarr)
+    # Construct the unnormalized left mixture weight
+    bl = interceptl
+    pl = -2 * slopel
+    alphal = K_prime2_star_fun(x, ustarc) / xc^3
+    κl = exp(n / 2 / xc + n * bl - n * sqrt(pl)) / sqrt(alphal)
+    μ = 1 / sqrt(pl)
+    λ = n
+    p = κl * logcdf(InverseGaussian(μ, λ), xc)
+    # Construct the unnormalized right mixture weight
+    br = interceptr
+    pr = -sloper
+    alphar = K_prime2_star_fun(x, ustarc) / xc^2
+    κr = sqrt(n / 2 / pi / alphar) * exp(n * br) * gamma(n) / (n * pr)^n
+    q = κr * gamma(n, -n * sloper * xc)
+    # Construct the final weights
+    wl = p / (p + q)
+    wr = q / (p + q)
+    # Propose a first value
+    X = rand(rng) < wl ? randtigauss(rng, z, xc) :
+    U = rand(rng)
+    while U >
+end
+
+# References
+# [XX] https://github.com/zoj613/polyagamma/blob/main/src/pgm_saddle.c#L165.
