@@ -185,12 +185,12 @@ function a_xnt_right(x::Real, n::Int, t::Real)
     π * (n + 0.5) * exp(- (n + 0.5)^2 * π^2 * x / 2)
 end
 
-# Return a draw from IG(μ, 1) 1_{(0, t]}, see [2, pp. 3-4]
+# Return a draw from IG(1 / z, 1) 1_{(0, t]}, see [2, pp. 3-4]
 function randtigauss(rng::AbstractRNG, z::Real, t::Real)
     1 / z > t ? randtigauss_v1(rng, z, t) : randtigauss_v2(rng, z, t)
 end
 
-# Return a draw from IG(μ, 1) 1_{(0, t]}, for 1 / z > t, see [2, alg. 2]
+# Return a draw from IG(1 / z, 1) 1_{(0, t]}, for 1 / z > t, see [2, alg. 2]
 function randtigauss_v1(rng::AbstractRNG, z::Real, t::Real)
     x = t + one(t)
     α = zero(t)
@@ -207,7 +207,7 @@ function randtigauss_v1(rng::AbstractRNG, z::Real, t::Real)
     return x
 end
 
-# Return a draw from IG(μ, 1) 1_{(0, t]}, for 1 / z ≤ t, see [2, alg. 3]
+# Return a draw from IG(1 / z, 1) 1_{(0, t]}, for 1 / z ≤ t, see [2, alg. 3]
 # Note: There is a typo in the document: `x > R` must be replaced by `x > t`.
 function randtigauss_v2(rng::AbstractRNG, z::Real, t::Real)
     x = t + one(t)

@@ -1,19 +1,19 @@
-# Return u*(x) := t(x) - z^2 / 2, with t(x) defined in [1]
-function ustar(x::Real)
+# Return u*(x) := t(x) - z^2 / 2, with t(x) defined in [1].
+function fun_ustar(x::Real)
     ustar0 = init_ustar(x)
-    gh(u) = target_gh(u, x)
-    newtons_method(gh, ustar0)
+    ghH(u) = fun_ghH(u, x)
+    newtons_method(ghH, ustar0)
 end
 
-# First 2 derivatives of Q(u) - u * x (wrt u).
-function target_gh(u::Real, x::Real)
-    g = gQ(u)
-    h = hQ(u, g)
-    g - x, h
+# Return the first 2 derivatives of H(u, x) (wrt to u).
+function fun_ghH(u::Real, x::Real)
+    gQ = fun_gQ(u)
+    hQ = fun_hQ(u, g)
+    gQ - x, hQ
 end
 
 # Return Q'(u).
-function gQ(u::Real)
+function fun_gQ(u::Real)
     s = 2 * u
     a = sqrt(abs(s))
     tol = sqrt(eps(typeof(a)))
@@ -28,7 +28,7 @@ function gQ(u::Real)
 end
 
 # Return Q''(u).
-function hQ(u::Real, gQ::Real)
+function fun_hQ(u::Real, gQ::Real)
     s = 2 * u
     if abs(s) > sqrt(eps(typeof(s)))
         return gQ^2 + (1 - gQ) / s
